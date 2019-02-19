@@ -14,5 +14,11 @@ public:
 	Vector2 GetOffset();
 	SCENE GetMode();
 	bool AddObj(OBJ * obj);
+private:
+	void DeleteObjList();
+	/*const char(&keyData)[256];
+	const char(&keyDataOld)[256];*/
+	std::list<OBJ*>	objList;
+	Vector2 offset;
 };
 

@@ -6,7 +6,7 @@
 
 GameScene::GameScene()
 {
-	GameScene::Init();
+	Init();
 }
 
 
@@ -74,4 +74,13 @@ bool GameScene::AddObj(OBJ * obj)
 		return true;
 	}
 	return false;
+}
+
+void GameScene::DeleteObjList()
+{
+	for (auto itr : objList)
+	{
+		delete itr;
+	}
+	objList.clear();			// Ï¯ÌßÃŞ°À‚Ìî•ñ‚ğÁ‹‚·‚é
 }

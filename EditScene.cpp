@@ -6,7 +6,7 @@
 
 EditScene::EditScene()
 {
-	EditScene::Init();
+	Init();
 }
 
 
@@ -18,9 +18,11 @@ void EditScene::Init()
 {
 	LpMapCtl->MapReset();
 	offset = {20,20};
-	OBJ *tmp = new EditCursor(keyData, keyDataOld, GetOffset());				// ﾎﾟｲﾝﾀｰ変数にｵﾌﾞｼﾞｪｸﾄの情報を入れる
-	tmp->Init("image/map.png", Vector2(BLOCK_SIZE_X, BLOCK_SIZE_Y), Vector2(4, 4), Vector2(3, 3), 0);
-	AddObj(tmp);
+	//OBJ *tmp = new EditCursor(keyData, keyDataOld, GetOffset());				// ﾎﾟｲﾝﾀｰ変数にｵﾌﾞｼﾞｪｸﾄの情報を入れる
+	//tmp->Init("image/map.png", Vector2(BLOCK_SIZE_X, BLOCK_SIZE_Y), Vector2(4, 4), Vector2(3, 3), 0);
+	//AddObj(tmp);		
+
+	/// ひとまずコメントアウト
 }
 
 bool EditScene::AddObj(OBJ * obj)
@@ -31,6 +33,15 @@ bool EditScene::AddObj(OBJ * obj)
 		return true;
 	}
 	return false;
+}
+
+void EditScene::DeleteObjList()
+{
+	for (auto itr : objList)
+	{
+		delete itr;
+	}
+	objList.clear();			// ﾏｯﾌﾟﾃﾞｰﾀの情報を消去する
 }
 
 unique_scene EditScene::Update(const char(&keyData)[256], const char(&keyDataOld)[256], unique_scene scene)

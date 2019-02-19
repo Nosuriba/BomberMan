@@ -1,6 +1,6 @@
 #pragma once
 #include <iostream>
-#include <vector>
+#include <memory>
 #include <list>
 #include "Vector2.h"
 #include "SceneState.h"
