@@ -6,7 +6,7 @@
 
 GameScene::GameScene()
 {
-
+	GameScene::Init();
 }
 
 
@@ -17,7 +17,7 @@ GameScene::~GameScene()
 void GameScene::Init()
 {
 	LpMapCtl->MapReset();
-	SetOffset(Vector2(20, 20));
+	offset = {20,20};
 	LpMapCtl->MapLoad();
 }
 
@@ -26,9 +26,8 @@ unique_scene GameScene::Update(const char(&keyData)[256], const char(&keyDataOld
 	// ¹Ş°Ñ‚Ì‰Šú‰»‚ÖˆÚ“®
 	if (keyData[KEY_INPUT_F5] && !keyDataOld[KEY_INPUT_F5])
 	{
-		GameDestroy();
+		DeleteObjList();
 		return std::make_unique<EditScene>();
-		return 1;
 	}
 	LpMapCtl->FireUpdate();
 	for (auto itr = objList.begin(); itr != objList.end();)
@@ -57,7 +56,22 @@ unique_scene GameScene::Update(const char(&keyData)[256], const char(&keyDataOld
 	return scene;
 }
 
+Vector2 GameScene::GetOffset()
+{
+	return offset;
+}
+
 SCENE GameScene::GetMode()
 {
 	return SCENE::MAIN;
+}
+
+bool GameScene::AddObj(OBJ * obj)
+{
+	if (obj != nullptr)
+	{
+		objList.push_back(obj);			// obj‚Ì––”ö‚Énullptr‚ğ’Ç‰Á‚·‚é
+		return true;
+	}
+	return false;
 }

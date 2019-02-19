@@ -6,7 +6,7 @@
 
 EditScene::EditScene()
 {
-	Init();
+	EditScene::Init();
 }
 
 
@@ -17,10 +17,20 @@ EditScene::~EditScene()
 void EditScene::Init()
 {
 	LpMapCtl->MapReset();
-	SetOffset(Vector2(20, 20));
+	offset = {20,20};
 	OBJ *tmp = new EditCursor(keyData, keyDataOld, GetOffset());				// Îß²ÝÀ°•Ï”‚ÉµÌÞ¼Þª¸Ä‚Ìî•ñ‚ð“ü‚ê‚é
 	tmp->Init("image/map.png", Vector2(BLOCK_SIZE_X, BLOCK_SIZE_Y), Vector2(4, 4), Vector2(3, 3), 0);
 	AddObj(tmp);
+}
+
+bool EditScene::AddObj(OBJ * obj)
+{
+	if (obj != nullptr)
+	{
+		objList.push_back(obj);			// obj‚Ì––”ö‚Énullptr‚ð’Ç‰Á‚·‚é
+		return true;
+	}
+	return false;
 }
 
 unique_scene EditScene::Update(const char(&keyData)[256], const char(&keyDataOld)[256], unique_scene scene)
@@ -112,11 +122,17 @@ unique_scene EditScene::Update(const char(&keyData)[256], const char(&keyDataOld
 		DrawLine(pos1, pos2, 0x8c8c8c);
 	}
 	ScreenFlip();
-	return 1;
-	return scene;
+	return std::move(scene);
+}
+
+Vector2 EditScene::GetOffset()
+{
+	return offset;
 }
 
 SCENE EditScene::GetMode()
 {
 	return SCENE::EDIT;
 }
+
+

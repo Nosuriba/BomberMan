@@ -1,4 +1,5 @@
 #include <Windows.h>
+#include "SceneState.h"
 #include "ImageMng.h"
 #include "MapCtl.h"
 #include "Player.h"
@@ -133,9 +134,10 @@ bool MapCtl::MapLoad(void)
 	{
 		fread(&mapData[y][0], mapData[y].size() * sizeof(MAP_ID), 1, fp);
 	}
-	if (LpGameTask.GetMode() == GMODE_INIT)
+	if (LpGameTask.GetMode() == SCENE::MAIN)
 	{
-		SetPlayer();
+		// プレイヤー又は敵のIDが見つかった時、キャラクターの設定を行う
+		SetPlayer();	
 	}
 	fclose(fp);
 	return rtnFlag;
@@ -156,7 +158,7 @@ void MapCtl::SetPlayer(void)
 					LpGameTask.GetOffset() + Vector2(0, -20));
 				tmp->Init("image/bomberman.png", Vector2(100 / 5, 128 / 4), Vector2(5, 4), Vector2(0, 0), 2);
 				tmp->setPos(Vector2(LpGameTask.chipSize.x * x, LpGameTask.chipSize.y * y));
-				LpGameTask.AddObj(tmp);
+				LpGameTask.SetObj(tmp);
 				break;
 			case MAP_EDIT_EM1:
 				// 仮設定
@@ -166,7 +168,7 @@ void MapCtl::SetPlayer(void)
 				tmp->Init("image/enemy1.png", Vector2(100 / 5, 128 / 4), Vector2(5, 4), Vector2(0, 0), 2);
 				tmp->setPos(Vector2(LpGameTask.chipSize.x * x, LpGameTask.chipSize.y * y));
 				LpMapCtl->SetMapData(MAP_EDIT_EM1, Vector2(LpGameTask.chipSize.x * x, LpGameTask.chipSize.y * y));
-				LpGameTask.AddObj(tmp);
+				LpGameTask.SetObj(tmp);
 				break;
 			case MAP_EDIT_EM2:
 				tmp = new Enemy2(LpGameTask.keyDataPub,
@@ -174,7 +176,7 @@ void MapCtl::SetPlayer(void)
 					LpGameTask.GetOffset() + Vector2(0, -20));
 				tmp->Init("image/enemy2.png", Vector2(100 / 5, 128 / 4), Vector2(5, 4), Vector2(0, 0), 2);
 				tmp->setPos(Vector2(LpGameTask.chipSize.x * x, LpGameTask.chipSize.y * y));
-				LpGameTask.AddObj(tmp);
+				LpGameTask.SetObj(tmp);
 				break;
 			default:
 				break;
@@ -216,8 +218,8 @@ void MapCtl::MapDraw(void)
 	{
 		for (int x = 0; x < mapSize.x; x++)
 		{
-			if ((LpGameTask.GetMode() == GMODE_EDIT && mapData[y][x] >= START_EDIT_CHIP && mapData[y][x] <= END_EDIT_CHIP)
-		    || (LpGameTask.GetMode() == GMODE_MAIN && mapData[y][x] >= START_GAME_CHIP && mapData[y][x] <= END_GAME_CHIP))
+			if ((LpGameTask.GetMode() == SCENE::EDIT && mapData[y][x] >= START_EDIT_CHIP && mapData[y][x] <= END_EDIT_CHIP)
+		    || (LpGameTask.GetMode() == SCENE::MAIN && mapData[y][x] >= START_GAME_CHIP && mapData[y][x] <= END_GAME_CHIP))
 			{
 				DrawGraph(x * LpGameTask.chipSize.x + LpGameTask.GetOffset().x,
 					y * LpGameTask.chipSize.y + LpGameTask.GetOffset().y,
