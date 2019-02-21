@@ -141,7 +141,7 @@ void MapCtl::SetPlayer(void)
 					LpGameTask.GetOffset() + Vector2(0, -20));
 				tmp->Init("image/bomberman.png", Vector2(100 / 5, 128 / 4), Vector2(5, 4), Vector2(0, 0), 2);
 				tmp->setPos(Vector2(chipSize.x * x, chipSize.y * y));
-				LpGameTask.SetObj(tmp);
+				LpGameTask.AddObj(tmp);
 				break;
 			case MAP_EDIT_EM1:
 				// ‰¼Ý’è
@@ -151,7 +151,7 @@ void MapCtl::SetPlayer(void)
 				tmp->Init("image/enemy1.png", Vector2(100 / 5, 128 / 4), Vector2(5, 4), Vector2(0, 0), 2);
 				tmp->setPos(Vector2(chipSize.x * x, chipSize.y * y));
 				LpMapCtl.SetMapData(MAP_EDIT_EM1, Vector2(chipSize.x * x, chipSize.y * y));
-				LpGameTask.SetObj(tmp);
+				LpGameTask.AddObj(tmp);
 				break;
 			case MAP_EDIT_EM2:
 				tmp = new Enemy2(LpGameTask.keyDataPub,
@@ -159,7 +159,7 @@ void MapCtl::SetPlayer(void)
 					LpGameTask.GetOffset() + Vector2(0, -20));
 				tmp->Init("image/enemy2.png", Vector2(100 / 5, 128 / 4), Vector2(5, 4), Vector2(0, 0), 2);
 				tmp->setPos(Vector2(chipSize.x * x, chipSize.y * y));
-				LpGameTask.SetObj(tmp);
+				LpGameTask.AddObj(tmp);
 				break;
 			default:
 				break;
@@ -204,8 +204,6 @@ void MapCtl::MapDraw(void)
 			if ((LpGameTask.GetMode() == SCENE::EDIT && mapData[y][x] >= START_EDIT_CHIP && mapData[y][x] <= END_EDIT_CHIP)
 		    ||  (LpGameTask.GetMode() == SCENE::MAIN && mapData[y][x] >= START_GAME_CHIP && mapData[y][x] <= END_GAME_CHIP))
 			{
-				auto debug = Vector2(x * chipSize.x + LpGameTask.GetOffset().x,
-									 y * chipSize.y + LpGameTask.GetOffset().y);
 				DrawGraph(x * chipSize.x + LpGameTask.GetOffset().x,
 						  y * chipSize.y + LpGameTask.GetOffset().y,
 						  LpImageMng.ImgGetID("image/map.png")[mapData[y][x]], true);

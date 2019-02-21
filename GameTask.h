@@ -24,9 +24,11 @@ public:
 
 	void Run();
 	const Vector2 &GetOffset(void);							// •`‰æµÌ¾¯Ä‚Ì’l‚ğ•Ô‚·ÒİÊŞŠÖ”
+	void SetMode(const SCENE mode);
 	const SCENE GetMode();
 	const Vector2 GetMapSize();
-	void SetObj(OBJ * obj);
+	bool AddObj(OBJ * obj);
+	std::list<OBJ*> GetObj();
 	
 	const char	 (&keyDataPub)[256];
 	const char	 (&keyDataOldPub)[256];
@@ -41,9 +43,10 @@ private:
 	GameTask();						
 	~GameTask();
 	int SysInit(void);				
-	char		keyData[256];						
-	char		keyDataOld[256];					
+	char keyData[256];						
+	char keyDataOld[256];					
 	static std::unique_ptr<GameTask, GameTaskDeleter> s_Instance;					// ¼İ¸ŞÙÄİ—p‚ÌÎß²İÀ°•Ï”
+	std::list<OBJ*> objList;
 	std::unique_ptr<SceneState> scenePtr;
 
 	Vector2 offset;

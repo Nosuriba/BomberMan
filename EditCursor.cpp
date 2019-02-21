@@ -52,22 +52,22 @@ void EditCursor::SetMove(void)
 	Vector2 tmpPos(pos);		// ¶°¿Ù‚ÌˆÚ“®—p
 
 	// ‰EˆÚ“®(¶°¿Ù)
-	if (keyData[KEY_INPUT_NUMPAD4] && pos.x >= getSize().x)
+	if (keyData[KEY_INPUT_LEFT] && pos.x >= getSize().x)
 	{
 		tmpPos.x -= getSize().x;
 	}
 	// ¶ˆÚ“®(¶°¿Ù)
-	if (keyData[KEY_INPUT_NUMPAD6] && pos.x <= SCREEN_SIZE_X - (getSize().x * BLANK_BLOCK))
+	if (keyData[KEY_INPUT_RIGHT] && pos.x <= SCREEN_SIZE_X - (getSize().x * BLANK_BLOCK))
 	{
 		tmpPos.x += getSize().x;
 	}
 	// ãˆÚ“®(¶°¿Ù)
-	if (keyData[KEY_INPUT_NUMPAD8] && pos.y >= getSize().y)
+	if (keyData[KEY_INPUT_UP] && pos.y >= getSize().y)
 	{
 		tmpPos.y -= getSize().y;
 	}
 	// ‰ºˆÚ“®(¶°¿Ù)
-	if (keyData[KEY_INPUT_NUMPAD2] && pos.y <= SCREEN_SIZE_Y - (getSize().y * BLANK_BLOCK))
+	if (keyData[KEY_INPUT_DOWN] && pos.y <= SCREEN_SIZE_Y - (getSize().y * BLANK_BLOCK))
 	{
 		tmpPos.y += getSize().y;
 	}

@@ -28,7 +28,7 @@ void Player::SetMove(void)
 			tmp->Init("image/bomb.png", Vector2(40 / 2, 140 / 7), Vector2(2, 7), Vector2(0, 0), 2);
 			tmp->setPos(pos);
 			LpMapCtl.SetMapData(MAP_BOMB, pos);
-			LpGameTask.SetObj(tmp);
+			LpGameTask.AddObj(tmp);
 		}
 		// ‰E•ûŒü‚ÌˆÚ“®(¶°¿Ù)
 		if (keyData[KEY_INPUT_NUMPAD4])

@@ -22,28 +22,18 @@ void EditScene::Init()
 	offset = {20,20};
 	OBJ *tmp = new EditCursor(keyData, keyDataOld, GetOffset());				// ﾎﾟｲﾝﾀｰ変数にｵﾌﾞｼﾞｪｸﾄの情報を入れる
 	tmp->Init("image/map.png", Vector2(CHIP_SIZE, CHIP_SIZE), Vector2(4, 4), Vector2(3, 3), 0);
-	AddObj(tmp);		
+	LpGameTask.AddObj(tmp);		
 
 	/// ひとまずコメントアウト
 }
 
-bool EditScene::AddObj(OBJ * obj)
-{
-	if (obj != nullptr)
-	{
-		objList.push_back(obj);			// objの末尾にnullptrを追加する
-		return true;
-	}
-	return false;
-}
-
 void EditScene::DeleteObjList()
 {
-	for (auto itr : objList)
+	for (auto itr : LpGameTask.GetObj())
 	{
 		delete itr;
 	}
-	objList.clear();			// ﾏｯﾌﾟﾃﾞｰﾀの情報を消去する
+	LpGameTask.GetObj().clear();			// ﾏｯﾌﾟﾃﾞｰﾀの情報を消去する
 }
 
 unique_scene EditScene::Update(unique_scene scene)
@@ -51,6 +41,7 @@ unique_scene EditScene::Update(unique_scene scene)
 	// ｹﾞｰﾑの初期化へ移動
 	if (keyData[KEY_INPUT_F5] && !keyDataOld[KEY_INPUT_F5])
 	{
+		LpGameTask.SetMode(SCENE::MAIN);
 		return std::make_unique<GameScene>(keyData, keyDataOld);
 	}
 	// ｴﾃﾞｨｯﾄﾃﾞｰﾀの保存
@@ -102,7 +93,7 @@ unique_scene EditScene::Update(unique_scene scene)
 		}
 	}
 
-	for (auto itr : objList)
+	for (auto itr : LpGameTask.GetObj())
 	{
 		itr->Update();
 	}
@@ -110,7 +101,7 @@ unique_scene EditScene::Update(unique_scene scene)
 
 	ClsDrawScreen();
 
-	for (auto itr : objList)
+	for (auto itr : LpGameTask.GetObj())
 	{
 		itr->Draw();
 	}
@@ -141,10 +132,3 @@ Vector2 EditScene::GetOffset()
 {
 	return offset;
 }
-
-SCENE EditScene::GetMode()
-{
-	return SCENE::EDIT;
-}
-
-

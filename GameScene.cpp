@@ -3,6 +3,7 @@
 #include "EditScene.h"
 #include "EditCursor.h"
 #include "MapCtl.h"
+#include "GameTask.h"
 
 GameScene::GameScene(const char(&_keyData)[256], const char(&_keyDataOld)[256]) : 
 	keyData(_keyData), keyDataOld(_keyDataOld)
@@ -27,21 +28,24 @@ unique_scene GameScene::Update(unique_scene scene)
 	// ｹﾞｰﾑの初期化へ移動
 	if (keyData[KEY_INPUT_F5] && !keyDataOld[KEY_INPUT_F5])
 	{
-		DeleteObjList();
+		LpGameTask.SetMode(SCENE::EDIT);
 		return std::make_unique<EditScene>(keyData, keyDataOld);
 	}
 	LpMapCtl.FireUpdate();
-	for (auto itr = objList.begin(); itr != objList.end();)
+	/// objListの管理が上手くいっていないので、そこの修正をおこなう
+	for (auto itr = LpGameTask.GetObj().begin(); itr != LpGameTask.GetObj().end();)
 	{
 		if (!(*itr)->CheckActive())
 		{
 			delete (*itr);
-			itr = objList.erase(itr);		// 返り値の一つ先を消す
+			itr = LpGameTask.GetObj().erase(itr);		// 返り値の一つ先を消す
 			continue;
 		}
 		itr++;
 	}
-	for (auto itr = objList.begin(); itr != objList.end(); itr++)
+
+	// キャラクターの情報を更新している
+	for (auto itr = LpGameTask.GetObj().begin(); itr != LpGameTask.GetObj().end(); itr++)
 	{
 		(*itr)->Update();
 		(*itr)->UpdateAnim();
@@ -49,7 +53,7 @@ unique_scene GameScene::Update(unique_scene scene)
 	ClsDrawScreen();
 	LpMapCtl.MapDraw();
 	// ﾌﾟﾚｲﾔｰのｶｰｿﾙを描画
-	for (auto itr = objList.begin(); itr != objList.end(); itr++)
+	for (auto itr = LpGameTask.GetObj().begin(); itr != LpGameTask.GetObj().end(); itr++)
 	{
 		(*itr)->Draw();
 	}
@@ -62,26 +66,11 @@ Vector2 GameScene::GetOffset()
 	return offset;
 }
 
-SCENE GameScene::GetMode()
-{
-	return SCENE::MAIN;
-}
-
-bool GameScene::AddObj(OBJ * obj)
-{
-	if (obj != nullptr)
-	{
-		objList.push_back(obj);			// objの末尾にnullptrを追加する
-		return true;
-	}
-	return false;
-}
-
 void GameScene::DeleteObjList()
 {
-	for (auto itr : objList)
+	for (auto itr : LpGameTask.GetObj())
 	{
 		delete itr;
 	}
-	objList.clear();			// ﾏｯﾌﾟﾃﾞｰﾀの情報を消去する
+	LpGameTask.GetObj().clear();			// ﾏｯﾌﾟﾃﾞｰﾀの情報を消去する
 }
