@@ -16,9 +16,9 @@ GameScene::~GameScene()
 
 void GameScene::Init()
 {
-	LpMapCtl->MapReset();
+	LpMapCtl.MapReset();
 	offset = {20,20};
-	LpMapCtl->MapLoad();
+	LpMapCtl.MapLoad();
 }
 
 unique_scene GameScene::Update(const char(&keyData)[256], const char(&keyDataOld)[256], unique_scene scene)
@@ -29,7 +29,7 @@ unique_scene GameScene::Update(const char(&keyData)[256], const char(&keyDataOld
 		DeleteObjList();
 		return std::make_unique<EditScene>();
 	}
-	LpMapCtl->FireUpdate();
+	LpMapCtl.FireUpdate();
 	for (auto itr = objList.begin(); itr != objList.end();)
 	{
 		if (!(*itr)->CheckActive())
@@ -46,7 +46,7 @@ unique_scene GameScene::Update(const char(&keyData)[256], const char(&keyDataOld
 		(*itr)->UpdateAnim();
 	}
 	ClsDrawScreen();
-	LpMapCtl->MapDraw();
+	LpMapCtl.MapDraw();
 	// ÌßÚ²Ô°‚Ì¶°¿Ù‚ð•`‰æ
 	for (auto itr = objList.begin(); itr != objList.end(); itr++)
 	{

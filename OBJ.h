@@ -4,8 +4,6 @@
 #include "Vector2.h"
 #include "ImageMng.h"
 
-#define IMAGE_ID(X) (ImageMng::GetInstance()->GetID(X))
-
 // •`‰æ‚·‚éŒü‚«
 enum DRAW_DIR{
 	DIR_DOWN,

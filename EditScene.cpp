@@ -16,7 +16,7 @@ EditScene::~EditScene()
 
 void EditScene::Init()
 {
-	LpMapCtl->MapReset();
+	LpMapCtl.MapReset();
 	offset = {20,20};
 	//OBJ *tmp = new EditCursor(keyData, keyDataOld, GetOffset());				// ﾎﾟｲﾝﾀｰ変数にｵﾌﾞｼﾞｪｸﾄの情報を入れる
 	//tmp->Init("image/map.png", Vector2(BLOCK_SIZE_X, BLOCK_SIZE_Y), Vector2(4, 4), Vector2(3, 3), 0);
@@ -60,7 +60,7 @@ unique_scene EditScene::Update(const char(&keyData)[256], const char(&keyDataOld
 			"確認ダイアログ",						// ﾒｯｾｰｼﾞﾎﾞｯｸｽのﾀｲﾄﾙ
 			MB_OKCANCEL) == IDOK)					// ﾒｯｾｰｼﾞﾎﾞｯｸｽのｽﾀｲﾙ
 		{
-			LpMapCtl->MapSave();
+			LpMapCtl.MapSave();
 		}
 	}
 	// ｴﾃﾞｨｯﾄﾃﾞｰﾀの読み込み
@@ -72,7 +72,7 @@ unique_scene EditScene::Update(const char(&keyData)[256], const char(&keyDataOld
 			"確認ダイアログ",						// ﾒｯｾｰｼﾞﾎﾞｯｸｽのﾀｲﾄﾙ
 			MB_OKCANCEL) == IDOK)					// ﾒｯｾｰｼﾞﾎﾞｯｸｽのｽﾀｲﾙ
 		{
-			LpMapCtl->MapLoad();
+			LpMapCtl.MapLoad();
 		}
 	}
 	// 現在のｴﾃﾞｨｯﾄ内容を全て破棄
@@ -84,7 +84,7 @@ unique_scene EditScene::Update(const char(&keyData)[256], const char(&keyDataOld
 			"確認ダイアログ",							// ﾒｯｾｰｼﾞﾎﾞｯｸｽのﾀｲﾄﾙ
 			MB_OKCANCEL) == IDOK)						// ﾒｯｾｰｼﾞﾎﾞｯｸｽのｽﾀｲﾙ
 		{
-			LpMapCtl->MapDelete();
+			LpMapCtl.MapDelete();
 		}
 	}
 	// 壁のﾗﾝﾀﾞﾑ配置
@@ -96,7 +96,7 @@ unique_scene EditScene::Update(const char(&keyData)[256], const char(&keyDataOld
 			"確認ダイアログ",					// ﾒｯｾｰｼﾞﾎﾞｯｸｽのﾀｲﾄﾙ
 			MB_OKCANCEL) == IDOK)				// ﾒｯｾｰｼﾞﾎﾞｯｸｽのｽﾀｲﾙ
 		{
-			LpMapCtl->MapRandom();
+			LpMapCtl.MapRandom();
 		}
 	}
 
@@ -113,7 +113,7 @@ unique_scene EditScene::Update(const char(&keyData)[256], const char(&keyDataOld
 		itr->Draw();
 	}
 
-	LpMapCtl->MapDraw();			// ﾏｯﾌﾟIDの描画
+	LpMapCtl.MapDraw();			// ﾏｯﾌﾟIDの描画
 	Vector2 pos1 = GetOffset();		// 線の始点用の変数
 	Vector2 pos2(0, 0);				// 線の終点用の変数
 
@@ -121,8 +121,7 @@ unique_scene EditScene::Update(const char(&keyData)[256], const char(&keyDataOld
 	for (; pos1.x < SCREEN_SIZE_X; pos1.x += BLOCK_SIZE_X)
 	{
 		pos2 = Vector2(pos1.x, SCREEN_SIZE_Y - GetOffset().x);
-		DrawLine(pos1, pos2, 0x8c8c8c
-		);
+		DrawLine(pos1, pos2, 0x8c8c8c);
 	}
 
 	pos1 = Vector2(SCREEN_SIZE_X - GetOffset().x, 0);			// 線の始点の長さを初期化する

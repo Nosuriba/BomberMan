@@ -27,7 +27,7 @@ void Enemy::SetMove(void)
 		}
 	}
 	// ó‘Ô”»’èˆ—
-	switch (LpMapCtl->GetMapData(pos, moveID))
+	switch (LpMapCtl.GetMapData(pos, moveID))
 	{
 	case MAP_WALL1:
 	case MAP_WALL2:
@@ -55,7 +55,7 @@ void Enemy::SetMove(void)
 	state = ST_WALK;
 	timeCnt--;
 	// ˆÚ“®ˆ—
-	switch (LpMapCtl->GetMapData(pos, moveID))
+	switch (LpMapCtl.GetMapData(pos, moveID))
 	{
 	case MAP_FLOOR1:
 	case MAP_FLOOR2:

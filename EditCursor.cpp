@@ -37,10 +37,10 @@ void EditCursor::Draw(void)
 	// ¶°¿Ù‚Ì“§–¾“x‚ð’²®‚µ‚Ä•`‰æ‚·‚é
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);													// “§–¾‰»:OFF
 	DrawGraph((this->drawOffset.x * 2) + this->pos.x, (this->drawOffset.y * 2) + this->pos.y,	
-			 IMAGE_ID(imageName)[chipOffset.x + chipOffset.y * divCnt.x], true);	
+			 LpImageMng.ImgGetID(imageName)[chipOffset.x + chipOffset.y * divCnt.x], true);	
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, abs((blindFlam % (ALPHA_MAX * 2)) - ALPHA_MAX));		// “§–¾‰»:ON(±ÙÌ§’l‚ðâ‘Î’l‚É‚·‚é)
 	DrawGraph((this->drawOffset.x * 2) + this->pos.x, (this->drawOffset.y * 2)+ this->pos.y,	
-			 IMAGE_ID(imageName)[mapChip], true);
+			 LpImageMng.ImgGetID(imageName)[mapChip], true);
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);													// “§–¾‰»:OFF
 
 	blindFlam += BLIND_FLAM_CNT;			// ¶°¿Ù“§–¾“x—pÌÚ°Ñ‚ð‰ÁŽZ‚·‚é
@@ -90,7 +90,7 @@ void EditCursor::SetMove(void)
 		// Ï¯ÌßÃÞ°À‚ÌÝ’u
 		if (keyData[KEY_INPUT_Z])
 		{
-			LpMapCtl->SetMapData(mapChip, pos + LpGameTask.GetOffset());
+			LpMapCtl.SetMapData(mapChip, pos + LpGameTask.GetOffset());
 		}
 		// Ï¯ÌßID‚Ì‰ÁŽZ
 		if (keyData[KEY_INPUT_S] && !keyDataOld[KEY_INPUT_S])

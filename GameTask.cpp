@@ -7,10 +7,11 @@
 
 std::unique_ptr<GameTask, GameTask::GameTaskDeleter> GameTask::s_Instance(new GameTask());
 
-GameTask::GameTask(): keyDataPub(keyData),keyDataOldPub(keyDataOld)		// ¹Þ°ÑÓ°ÄÞ‚ÌÌßÚ²Ô°—p·°Ý’è
+GameTask::GameTask(): keyDataPub(keyData),keyDataOldPub(keyDataOld), 
+mapSize((SCREEN_SIZE_X / BLOCK_SIZE_X) - 2, (SCREEN_SIZE_Y / BLOCK_SIZE_Y) - 2)
 {
 	SysInit();
-	LpMapCtl->MapReset();
+	//LpMapCtl.MapReset();
 }
 
 GameTask::~GameTask()
@@ -36,6 +37,8 @@ void GameTask::Run()
 	{
 		memcpy(keyDataOld, keyData, sizeof(keyDataOld));
 		GetHitKeyStateAll(keyData);
+
+		mode = scenePtr->GetMode();
 		scenePtr = scenePtr->Update(keyData, keyDataOld,std::move(scenePtr));
 	}
 }
@@ -47,7 +50,12 @@ const Vector2& GameTask::GetOffset(void)
 
 const SCENE GameTask::GetMode()
 {
-	return scenePtr->GetMode();
+	return mode;
+}
+
+const Vector2 GameTask::GetMapSize()
+{
+	return mapSize;
 }
 
 void GameTask::SetObj(OBJ * obj)

@@ -65,12 +65,9 @@ using VEC_FIRE_ID = vector<vector<vector<FireStr>>>;		// 爆風のデータ型ID([Yの個
 class MapCtl
 {
 public:
-	~MapCtl();
-	static void Create(void);
-	static void Destroy(void);
-	static MapCtl *GetInstance()
+	static MapCtl & GetInstance()
 	{
-		return s_Instance;
+		return *s_Instance;
 	}
 	bool MapReset(void);							// ﾏｯﾌﾟﾃﾞｰﾀの再設定
 	bool MapSave(void);
@@ -84,11 +81,19 @@ public:
 	void FireUpdate(void);
 	MAP_ID GetMapData(Vector2& vec);
 	MAP_ID GetMapData(Vector2 & vec, DRAW_DIR dir);
-	const Vector2 mapSize{ MAP_DATA_X,MAP_DATA_Y };		// ﾏｯﾌﾟｻｲｽﾞの初期化
+	
 private:
 	MapCtl();
-	static MapCtl	*s_Instance;
-	const double deg[MOVE_DIR_MAX] = { DEG(270), DEG(180) , DEG(0), DEG(90) };
+	~MapCtl();
+	struct MapCtlDeleter
+	{
+		void operator()(MapCtl * mapctl) const 
+		{
+			delete mapctl;
+		}
+	};
+	static std::unique_ptr<MapCtl, MapCtlDeleter> s_Instance;
+	const double	deg[MOVE_DIR_MAX] = { DEG(270), DEG(180) , DEG(0), DEG(90) };
 	Vector2			drawOffset;
 	VEC2_MAPID		mapData;		// ﾏｯﾌﾟID用の変数
 	VEC_FIRE_ID		fireMapData;	// 爆風ID用の変数

@@ -28,9 +28,9 @@ public:
 	void Run();
 	const Vector2 &GetOffset(void);							// •`‰æµÌ¾¯Ä‚Ì’l‚ğ•Ô‚·ÒİÊŞŠÖ”
 	const SCENE GetMode();
+	const Vector2 GetMapSize();
 	void SetObj(OBJ * obj);
 	
-	const Vector2 mapSize { MAP_DATA_X,MAP_DATA_Y };		// Ï¯ÌßŞ‚Ì‰Šú‰»
 	const Vector2 chipSize{ BLOCK_SIZE_X,BLOCK_SIZE_Y };	// Ï¯ÌßÁ¯Ìß‚Ì»²½Ş‚Ì‰Šú‰»
 	const char	 (&keyDataPub)[256];
 	const char	 (&keyDataOldPub)[256];
@@ -49,5 +49,8 @@ private:
 	char		keyDataOld[256];					
 	static std::unique_ptr<GameTask, GameTaskDeleter> s_Instance;					// ¼İ¸ŞÙÄİ—p‚ÌÎß²İÀ°•Ï”
 	std::unique_ptr<SceneState> scenePtr;
+
+	SCENE mode;
+	const Vector2 mapSize;
 };
 int DrawLine(const Vector2 & pos1, const Vector2 & pos2, unsigned int Color);	// ü‚Ì•`‰æ—pŠÖ”

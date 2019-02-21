@@ -1,8 +1,7 @@
 #include "ImageMng.h"
 #include "DxLib.h"
 
-ImageMng *ImageMng::s_Instance = nullptr;		// ¼İ¸ŞÙÄİ‚ÌÀ‘Ì‚ğ¦‚·µÌŞ¼Şª¸Ä
-
+std::unique_ptr<ImageMng, ImageMng::ImageMng::ImageMngDeleter> ImageMng::s_Instance(new ImageMng());
 ImageMng::ImageMng()
 {
 }
@@ -11,25 +10,7 @@ ImageMng::~ImageMng()
 {
 }
 
-void ImageMng::Create(void)
-{
-	if (!s_Instance)
-	{
-		s_Instance = new ImageMng();
-	}
-}
-
-void ImageMng::Destroy(void)
-{
-	// ÒÓØ‚Ì’†g‚É‰½‚©“ü‚Á‚Ä‚¢‚½‚ç
-	if (s_Instance)
-	{
-		delete s_Instance;
-		s_Instance = nullptr;
-	}
-}
-
-const VEC_INT & ImageMng::GetID(std::string f_name)
+const VEC_INT & ImageMng::ImgGetID(std::string f_name)
 {
 	if (imageMap.find(f_name) == imageMap.end())
 	{
@@ -39,7 +20,7 @@ const VEC_INT & ImageMng::GetID(std::string f_name)
 	return imageMap[f_name];
 }
 
-const VEC_INT & ImageMng::GetID(string f_name, Vector2 divSize, Vector2 divCnt, Vector2 chipOffset)
+const VEC_INT & ImageMng::ImgGetID(string f_name, Vector2 divSize, Vector2 divCnt, Vector2 chipOffset)
 {
 	if (imageMap.find(f_name) == imageMap.end())
 	{

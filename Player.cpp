@@ -27,7 +27,7 @@ void Player::SetMove(void)
 							BombRange);
 			tmp->Init("image/bomb.png", Vector2(40 / 2, 140 / 7), Vector2(2, 7), Vector2(0, 0), 2);
 			tmp->setPos(pos);
-			LpMapCtl->SetMapData(MAP_BOMB, pos);
+			LpMapCtl.SetMapData(MAP_BOMB, pos);
 			LpGameTask.SetObj(tmp);
 		}
 		// 右方向の移動(ｶｰｿﾙ)
@@ -64,7 +64,7 @@ void Player::SetMove(void)
 	}
 	if (moveID)
 	{
-		switch (LpMapCtl->GetMapData(pos, drawDir))
+		switch (LpMapCtl.GetMapData(pos, drawDir))
 		{
 		case MAP_WALL1:
 		case MAP_WALL2:
@@ -74,14 +74,14 @@ void Player::SetMove(void)
 			break;
 		case MAP_ITEM_SHOSE:
 			// ｱｲﾃﾑ(ｽﾋﾟｰﾄﾞｱｯﾌﾟ) [バグあり(右)(上)]
-			LpMapCtl->SetMapData(MAP_NON, pos);
+			LpMapCtl.SetMapData(MAP_NON, pos);
 			if (pos.x % LpGameTask.chipSize.x >= 0)
 			{
-				LpMapCtl->SetMapData(MAP_NON, Vector2(pos.x + chipOffset.x, pos.y));
+				LpMapCtl.SetMapData(MAP_NON, Vector2(pos.x + chipOffset.x, pos.y));
 			}
 			else if (pos.y % LpGameTask.chipSize.y >= 0)
 			{
-				LpMapCtl->SetMapData(MAP_NON, Vector2(pos.x, pos.y + chipOffset.y));
+				LpMapCtl.SetMapData(MAP_NON, Vector2(pos.x, pos.y + chipOffset.y));
 			}
 			if (speed <= PLAYER_DEF_SPEED)
 			{

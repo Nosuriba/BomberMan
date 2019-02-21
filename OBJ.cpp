@@ -44,7 +44,7 @@ void OBJ::Draw(void)
 	{
 		return;
 	}
-	DrawGraph(this->drawOffset.x + this->pos.x, this->drawOffset.y + this->pos.y, IMAGE_ID(imageName)[chipOffset.x + chipOffset.y * divCnt.x], true);
+	DrawGraph(this->drawOffset.x + this->pos.x, this->drawOffset.y + this->pos.y, LpImageMng.ImgGetID(imageName)[chipOffset.x + chipOffset.y * divCnt.x], true);
 }
 
 // •`‰æ‚Ì’†g‚ðŽw’è‚·‚é
@@ -54,7 +54,7 @@ void OBJ::Draw(const Vector2 & pos)
 	{
 		return;
 	}
-	DrawGraph(pos.x, pos.y, IMAGE_ID(imageName)[chipOffset.x + chipOffset.y * divCnt.x], true);
+	DrawGraph(pos.x, pos.y, LpImageMng.ImgGetID(imageName)[chipOffset.x + chipOffset.y * divCnt.x], true);
 }
 void OBJ::SetMove(void)
 {
@@ -79,7 +79,7 @@ void OBJ::UpdateAnim(void)
 void OBJ::Init(std::string Filename, Vector2 divSize, Vector2 divCnt, Vector2 chipOffset, int speed, int animSpeed, int stateAnimDiv)
 {
 	// ‰æ‘œ‚Ì•ªŠ„î•ñ
-	ImageMng::GetInstance()->GetID(Filename.c_str(), divSize, divCnt, chipOffset);		
+	LpImageMng.ImgGetID(Filename.c_str(), divSize, divCnt, chipOffset);		
 	imageName			= Filename;
 
 	this->divSize		= divSize;

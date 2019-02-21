@@ -7,7 +7,7 @@
 #include "Enemy2.h"
 #include "DxLib.h"
 
-MapCtl *MapCtl::s_Instance = nullptr;
+std::unique_ptr<MapCtl, MapCtl::MapCtlDeleter> MapCtl::s_Instance(new MapCtl());
 
 MapCtl::MapCtl()
 {
@@ -17,31 +17,15 @@ MapCtl::~MapCtl()
 {
 }
 
-void MapCtl::Create(void)
-{
-	if (!s_Instance)
-	{
-		s_Instance = new MapCtl();
-	}
-}
-
-void MapCtl::Destroy(void)
-{
-	if (s_Instance)
-	{
-		delete s_Instance;
-		s_Instance = nullptr;
-	}
-}
-
 bool MapCtl::MapReset(void)
 {
-	mapData.clear();					// ﾏｯﾌﾟﾃﾞｰﾀのﾒﾓﾘを消去
+	auto debug = mapData.size();
+	/*mapData.clear();*/
 	// ﾏｯﾌﾟﾃﾞｰﾀのﾒﾓﾘ確保
-	mapData.resize(mapSize.y);
+	mapData.resize(LpGameTask.GetMapSize().y);
 	for (unsigned int i = 0; i < mapData.size(); i++)
 	{
-		mapData[i].resize(mapSize.x);	// 縦ﾏｽ1個の中に、横ﾏｽの数分ﾒﾓﾘを確保する
+		mapData[i].resize(LpGameTask.GetMapSize().x);	// 縦ﾏｽ1個の中に、横ﾏｽの数分ﾒﾓﾘを確保する
 	}
 	// ﾏｯﾌﾟIDの初期設定
 	for (unsigned int y = 0; y < mapData.size(); y++)
@@ -55,10 +39,10 @@ bool MapCtl::MapReset(void)
 	fireMapData.clear();		// 爆風のﾒﾓﾘを消去
 
 	// 爆風のﾒﾓﾘ確保
-	fireMapData.resize(mapSize.y);
+	fireMapData.resize(LpGameTask.GetMapSize().y);
 	for (unsigned int i = 0; i < mapData.size(); i++)
 	{
-		fireMapData[i].resize(mapSize.x);
+		fireMapData[i].resize(LpGameTask.GetMapSize().x);
 	}
 	for (unsigned int y = 0; y < fireMapData.size(); y++)
 	{
@@ -84,8 +68,8 @@ bool MapCtl::MapSave(void)
 		BBM_ID_NAME,		// ﾌｧｲﾙのID
 		BBM_VER_ID,			// ﾌｧｲﾙのﾊﾞｰｼﾞｮﾝ番号
 		{ 0,0 },			// ｱﾗｲﾒﾝﾄ分の予約領域
-		mapSize.x,			// ﾏｯﾌﾟのｻｲｽﾞX
-		mapSize.y,			// ﾏｯﾌﾟのｻｲｽﾞY
+		LpGameTask.GetMapSize().x,			// ﾏｯﾌﾟのｻｲｽﾞX
+		LpGameTask.GetMapSize().y,			// ﾏｯﾌﾟのｻｲｽﾞY
 		{ 0,0,0 },			// sum値の予約領域
 		0xff				// sum値
 	};
@@ -120,8 +104,8 @@ bool MapCtl::MapLoad(void)
 		BBM_ID_NAME,		// ﾌｧｲﾙのID
 		BBM_VER_ID,			// ﾌｧｲﾙのﾊﾞｰｼﾞｮﾝ番号
 		{ 0,0 },			// ｱﾗｲﾒﾝﾄ分の予約領域
-		mapSize.x,			// ﾏｯﾌﾟのｻｲｽﾞX
-		mapSize.y,			// ﾏｯﾌﾟのｻｲｽﾞY
+		LpGameTask.GetMapSize().x,			// ﾏｯﾌﾟのｻｲｽﾞX
+		LpGameTask.GetMapSize().y,			// ﾏｯﾌﾟのｻｲｽﾞY
 		{ 0,0,0 },			// sum値の予約領域
 		0x00				// sum値
 	};
@@ -167,7 +151,7 @@ void MapCtl::SetPlayer(void)
 					LpGameTask.GetOffset() + Vector2(0, -20));
 				tmp->Init("image/enemy1.png", Vector2(100 / 5, 128 / 4), Vector2(5, 4), Vector2(0, 0), 2);
 				tmp->setPos(Vector2(LpGameTask.chipSize.x * x, LpGameTask.chipSize.y * y));
-				LpMapCtl->SetMapData(MAP_EDIT_EM1, Vector2(LpGameTask.chipSize.x * x, LpGameTask.chipSize.y * y));
+				LpMapCtl.SetMapData(MAP_EDIT_EM1, Vector2(LpGameTask.chipSize.x * x, LpGameTask.chipSize.y * y));
 				LpGameTask.SetObj(tmp);
 				break;
 			case MAP_EDIT_EM2:
@@ -214,16 +198,17 @@ void MapCtl::MapRandom(void)
 void MapCtl::MapDraw(void)
 {
 	// ﾏｯﾌﾟのﾏｽの数分描画する
-	for (int y = 0; y < mapSize.y; y++)
+	for (int y = 0; y < LpGameTask.GetMapSize().y; y++)
 	{
-		for (int x = 0; x < mapSize.x; x++)
+		for (int x = 0; x < LpGameTask.GetMapSize().x; x++)
 		{
+			/// マップデータが生成されていないからエラーが出てる
 			if ((LpGameTask.GetMode() == SCENE::EDIT && mapData[y][x] >= START_EDIT_CHIP && mapData[y][x] <= END_EDIT_CHIP)
 		    || (LpGameTask.GetMode() == SCENE::MAIN && mapData[y][x] >= START_GAME_CHIP && mapData[y][x] <= END_GAME_CHIP))
 			{
 				DrawGraph(x * LpGameTask.chipSize.x + LpGameTask.GetOffset().x,
-					y * LpGameTask.chipSize.y + LpGameTask.GetOffset().y,
-					IMAGE_ID("image/map.png")[mapData[y][x]], true);
+						  y * LpGameTask.chipSize.y + LpGameTask.GetOffset().y,
+						  LpImageMng.ImgGetID("image/map.png")[mapData[y][x]], true);
 			}
 		}
 	}
@@ -249,7 +234,7 @@ void MapCtl::MapDraw(void)
 			{
 				DrawGraph(x * LpGameTask.chipSize.x + LpGameTask.GetOffset().x,
 					y * LpGameTask.chipSize.y + LpGameTask.GetOffset().y,
-					IMAGE_ID("image/fire.png")[0], true);
+					LpImageMng.ImgGetID("image/fire.png")[0], true);
 			}
 			else
 			{
@@ -263,7 +248,7 @@ void MapCtl::MapDraw(void)
 						y * LpGameTask.chipSize.y + LpGameTask.GetOffset().y + LpGameTask.chipSize.y / 2 
 						);
 
-						DrawRotaGraph(firPos.x, firPos.y, 1.0f, deg[dir], IMAGE_ID("image/fire.png")[1], true);
+						DrawRotaGraph(firPos.x, firPos.y, 1.0f, deg[dir], LpImageMng.ImgGetID("image/fire.png")[1], true);
 					}
 				}
 			}
@@ -300,9 +285,9 @@ bool MapCtl::SetFireData(BOMB_DIR dir, Vector2 & vec)
 
 void MapCtl::FireUpdate(void)
 {
-	for (int y = 0; y < mapSize.y; y++)
+	for (int y = 0; y < LpGameTask.GetMapSize().y; y++)
 	{
-		for (int x = 0; x < mapSize.x; x++)
+		for (int x = 0; x < LpGameTask.GetMapSize().x; x++)
 		{
 			for (int dir = 0; dir < MOVE_DIR_MAX; dir++)
 			{
