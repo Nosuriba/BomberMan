@@ -14,8 +14,8 @@ Enemy::~Enemy()
 
 void Enemy::SetMove(void)
 {
-	if (!(pos.x % LpGameTask.chipSize.x)
-	&&  !(pos.y % LpGameTask.chipSize.y))
+	if (!(pos.x % LpMapCtl.GetChipSize().x)
+	&&  !(pos.y % LpMapCtl.GetChipSize().y))
 	{
 		if (timeCnt > MOVE_TIME_CNT / 2)
 		{
@@ -43,8 +43,8 @@ void Enemy::SetMove(void)
 		break;
 	case MAP_FIRE:
 		// ìGÇÃéÄñSèàóù
-		if ((pos.x % LpGameTask.chipSize.x == 0)
-		&& (pos.y % LpGameTask.chipSize.y == 0))
+		if ((pos.x % LpMapCtl.GetChipSize().x == 0)
+		&& (pos.y % LpMapCtl.GetChipSize().y == 0))
 		{
 			active = false;
 		}

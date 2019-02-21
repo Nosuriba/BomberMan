@@ -27,8 +27,8 @@ void Enemy2::SetMove(void)
 		break;
 	case MAP_FIRE:
 		// “G‚Ì€–Sˆ—
-		if ((pos.x % LpGameTask.chipSize.x)
-		&& (pos.y % LpGameTask.chipSize.y))
+		if ((pos.x % LpMapCtl.GetChipSize().x)
+		&& (pos.y % LpMapCtl.GetChipSize().y))
 		{
 			active = false;
 		}

@@ -15,8 +15,8 @@ Player::~Player()
 void Player::SetMove(void)
 {
 	// ¡ØÃﬂª≤ΩﬁÇÃëÂÇ´Ç≥Ç≈äÑÇËêÿÇÍÇ»Ç¢èÍçá
-	if (!(pos.x % LpGameTask.chipSize.x)
-	&&  !(pos.y % LpGameTask.chipSize.y))
+	if (!(pos.x % LpMapCtl.GetChipSize().x)
+	&&  !(pos.y % LpMapCtl.GetChipSize().y))
 	{
 		if (keyData[KEY_INPUT_Z] && !keyDataOld[KEY_INPUT_Z])
 		{
@@ -75,11 +75,11 @@ void Player::SetMove(void)
 		case MAP_ITEM_SHOSE:
 			// ±≤√—(ΩÀﬂ∞ƒﬁ±ØÃﬂ) [ÉoÉOÇ†ÇË(âE)(è„)]
 			LpMapCtl.SetMapData(MAP_NON, pos);
-			if (pos.x % LpGameTask.chipSize.x >= 0)
+			if (pos.x % LpMapCtl.GetChipSize().x >= 0)
 			{
 				LpMapCtl.SetMapData(MAP_NON, Vector2(pos.x + chipOffset.x, pos.y));
 			}
-			else if (pos.y % LpGameTask.chipSize.y >= 0)
+			else if (pos.y % LpMapCtl.GetChipSize().y >= 0)
 			{
 				LpMapCtl.SetMapData(MAP_NON, Vector2(pos.x, pos.y + chipOffset.y));
 			}
@@ -91,8 +91,8 @@ void Player::SetMove(void)
 			break;
 		case MAP_FIRE:
 			// Ãﬂ⁄≤‘∞ÇÃéÄñSèàóù
-			if ((pos.x % LpGameTask.chipSize.x == 0)
-			&& (pos.y % LpGameTask.chipSize.y == 0))
+			if ((pos.x % LpMapCtl.GetChipSize().x == 0)
+			&& (pos.y % LpMapCtl.GetChipSize().y == 0))
 			{
 				active = false;
 			}

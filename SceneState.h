@@ -22,7 +22,7 @@ public:
 	virtual ~SceneState();
 
 	virtual void Init()				= 0;
-	virtual unique_scene Update(const char(&keyData)[256], const char(&keyDataOld)[256], unique_scene scene) = 0;
+	virtual unique_scene Update(unique_scene scene) = 0;
 	virtual SCENE GetMode()			= 0;
 	virtual Vector2 GetOffset()		= 0;
 	virtual bool AddObj(OBJ * obj)  = 0;

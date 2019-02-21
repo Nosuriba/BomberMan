@@ -21,12 +21,12 @@ void EditCursor::Draw(void)
 	}
 
 	// ¶°¿ÙÀ°¹Þ¯Ä‚Ì•`‰æ
-	for (int y = 1; y < MAP_DATA_Y; y++)
+	for (int y = 1; y < LpGameTask.GetMapSize().y; y++)
 	{
 		// c‚ÌÀ°¹Þ¯Ä•\Ž¦
 		DrawBox(this->pos.x + (this->drawOffset.x * 2), this->pos.y + (this->drawOffset.y * 2), 
 				this->pos.x + (this->drawOffset.x * 3), (y * this->drawOffset.y + this->drawOffset.y), 0x888800, true);
-		for (int x = 1; x < MAP_DATA_X; x++)
+		for (int x = 1; x < LpGameTask.GetMapSize().x; x++)
 		{
 			// ‰¡‚ÌÀ°¹Þ¯Ä•\Ž¦
 			DrawBox(this->pos.x + this->drawOffset.x, this->pos.y + (this->drawOffset.y * 2),

@@ -11,10 +11,7 @@ class OBJ;
 #define SCREEN_SIZE_Y	(600)		// ¹Ş°Ñ½¸Ø°İ‰æ–Ê‚Ìc»²½Ş
 #define GAME_SCREEN_X	(40)		// ¹Ş°Ñ‰æ–Ê‚Ì‰¡»²½Ş
 #define GAME_SCREEN_Y	(75)		// ¹Ş°Ñ‰æ–Ê‚Ìc»²½Ş
-#define BLOCK_SIZE_X	(20)		// ‰¡Ï½‚Ì»²½Ş
-#define BLOCK_SIZE_Y	(20)		// cÏ½‚Ì»²½Ş
-#define MAP_DATA_X		((SCREEN_SIZE_X / BLOCK_SIZE_X ) - 2)		// ‰¡‚ÌÏ¯ÌßÃŞ°À‚ÌŒÂ”
-#define MAP_DATA_Y		((SCREEN_SIZE_Y / BLOCK_SIZE_Y ) - 2)		// c‚ÌÏ¯ÌßÃŞ°À‚ÌŒÂ”
+#define CHIP_SIZE		(20)
 
 #define LpGameTask GameTask::GetInstance()	// GameTask‚ÌÛİ¸ŞÎß²İÀ°
 class GameTask
@@ -31,7 +28,6 @@ public:
 	const Vector2 GetMapSize();
 	void SetObj(OBJ * obj);
 	
-	const Vector2 chipSize{ BLOCK_SIZE_X,BLOCK_SIZE_Y };	// Ï¯ÌßÁ¯Ìß‚Ì»²½Ş‚Ì‰Šú‰»
 	const char	 (&keyDataPub)[256];
 	const char	 (&keyDataOldPub)[256];
 private:
@@ -50,6 +46,7 @@ private:
 	static std::unique_ptr<GameTask, GameTaskDeleter> s_Instance;					// ¼İ¸ŞÙÄİ—p‚ÌÎß²İÀ°•Ï”
 	std::unique_ptr<SceneState> scenePtr;
 
+	Vector2 offset;
 	SCENE mode;
 	const Vector2 mapSize;
 };

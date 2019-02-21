@@ -1,6 +1,5 @@
 #pragma once
 #include "Vector2.h"
-#include "GameTask.h"
 #include "OBJ.h"
 #include "Bomb.h"
 #include <vector>
@@ -81,6 +80,7 @@ public:
 	void FireUpdate(void);
 	MAP_ID GetMapData(Vector2& vec);
 	MAP_ID GetMapData(Vector2 & vec, DRAW_DIR dir);
+	const Vector2 GetChipSize();
 	
 private:
 	MapCtl();
@@ -94,7 +94,7 @@ private:
 	};
 	static std::unique_ptr<MapCtl, MapCtlDeleter> s_Instance;
 	const double	deg[MOVE_DIR_MAX] = { DEG(270), DEG(180) , DEG(0), DEG(90) };
-	Vector2			drawOffset;
+	const Vector2	chipSize;
 	VEC2_MAPID		mapData;		// Ï¯ÌßID—p‚Ì•Ï”
 	VEC_FIRE_ID		fireMapData;	// ”š•—ID—p‚Ì•Ï”
 

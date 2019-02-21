@@ -36,10 +36,10 @@ void Bomb::SetMove(void)
 		}
 		break;
 	case BOMB_FIR:
-		LpMapCtl.SetFireData(MOVE_DIR_UP,		Vector2(pos.x, pos.y - fireLength[MOVE_DIR_UP] * LpGameTask.chipSize.y));
-		LpMapCtl.SetFireData(MOVE_DIR_DOWN,	Vector2(pos.x, pos.y + fireLength[MOVE_DIR_DOWN] * LpGameTask.chipSize.y));
-		LpMapCtl.SetFireData(MOVE_DIR_LEFT,	Vector2(pos.x - fireLength[MOVE_DIR_LEFT] * LpGameTask.chipSize.x, pos.y));
-		LpMapCtl.SetFireData(MOVE_DIR_RIGHT,	Vector2(pos.x + fireLength[MOVE_DIR_RIGHT] * LpGameTask.chipSize.x, pos.y));
+		LpMapCtl.SetFireData(MOVE_DIR_UP,	Vector2(pos.x, pos.y - fireLength[MOVE_DIR_UP] * LpMapCtl.GetChipSize().y));
+		LpMapCtl.SetFireData(MOVE_DIR_DOWN,	Vector2(pos.x, pos.y + fireLength[MOVE_DIR_DOWN] * LpMapCtl.GetChipSize().y));
+		LpMapCtl.SetFireData(MOVE_DIR_LEFT,	Vector2(pos.x - fireLength[MOVE_DIR_LEFT] * LpMapCtl.GetChipSize().x, pos.y));
+		LpMapCtl.SetFireData(MOVE_DIR_RIGHT,Vector2(pos.x + fireLength[MOVE_DIR_RIGHT] * LpMapCtl.GetChipSize().x, pos.y));
 		if (!(expTime % BOMB_FIR_TIME))
 		{
 			// îöïóÇÃèàóù(4ï˚å¸)
