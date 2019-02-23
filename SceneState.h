@@ -22,7 +22,9 @@ public:
 	virtual ~SceneState();
 
 	virtual void Init()				= 0;
+	virtual void Init(SCENE mode)	= 0;
 	virtual unique_scene Update(unique_scene scene) = 0;
+	virtual SCENE GetMode()			= 0;
 	virtual Vector2 GetOffset()		= 0;
 };
 

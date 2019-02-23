@@ -39,6 +39,12 @@ void GameTask::Run()
 		GetHitKeyStateAll(keyData);
 		offset = scenePtr->GetOffset();
 		scenePtr = scenePtr->Update(std::move(scenePtr));
+
+		if (mode != scenePtr->GetMode())
+		{
+			mode = scenePtr->GetMode();
+			scenePtr->Init(mode);
+		}
 	}
 }
 

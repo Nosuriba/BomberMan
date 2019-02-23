@@ -100,13 +100,13 @@ bool MapCtl::MapLoad(void)
 {
 	bool rtnFlag = true;
 	DataHeader expData{
-		BBM_ID_NAME,		// ﾌｧｲﾙのID
-		BBM_VER_ID,			// ﾌｧｲﾙのﾊﾞｰｼﾞｮﾝ番号
-		{ 0,0 },			// ｱﾗｲﾒﾝﾄ分の予約領域
-		LpGameTask.GetMapSize().x,			// ﾏｯﾌﾟのｻｲｽﾞX
-		LpGameTask.GetMapSize().y,			// ﾏｯﾌﾟのｻｲｽﾞY
-		{ 0,0,0 },			// sum値の予約領域
-		0x00				// sum値
+		BBM_ID_NAME,					// ﾌｧｲﾙのID
+		BBM_VER_ID,						// ﾌｧｲﾙのﾊﾞｰｼﾞｮﾝ番号
+		{ 0,0 },						// ｱﾗｲﾒﾝﾄ分の予約領域
+		LpGameTask.GetMapSize().x,		// ﾏｯﾌﾟのｻｲｽﾞX
+		LpGameTask.GetMapSize().y,		// ﾏｯﾌﾟのｻｲｽﾞY
+		{ 0,0,0 },						// sum値の予約領域
+		0x00							// sum値
 	};
 
 	// 特定ﾌｧｲﾙのﾃﾞｰﾀを読み込む

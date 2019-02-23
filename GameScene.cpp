@@ -23,12 +23,18 @@ void GameScene::Init()
 	LpMapCtl.MapLoad();
 }
 
+void GameScene::Init(SCENE mode)
+{
+	LpMapCtl.MapReset();
+	offset = { 20,20 };
+	LpMapCtl.MapLoad();
+}
+
 unique_scene GameScene::Update(unique_scene scene)
 {
 	// πﬁ∞—ÇÃèâä˙âªÇ÷à⁄ìÆ
 	if (keyData[KEY_INPUT_F5] && !keyDataOld[KEY_INPUT_F5])
 	{
-		LpGameTask.SetMode(SCENE::EDIT);
 		return std::make_unique<EditScene>(keyData, keyDataOld);
 	}
 	LpMapCtl.FireUpdate();
@@ -59,6 +65,11 @@ unique_scene GameScene::Update(unique_scene scene)
 	}
 	ScreenFlip();
 	return scene;
+}
+
+SCENE GameScene::GetMode()
+{
+	return SCENE::MAIN;
 }
 
 Vector2 GameScene::GetOffset()

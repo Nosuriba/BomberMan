@@ -23,8 +23,15 @@ void EditScene::Init()
 	OBJ *tmp = new EditCursor(keyData, keyDataOld, GetOffset());				// ﾎﾟｲﾝﾀｰ変数にｵﾌﾞｼﾞｪｸﾄの情報を入れる
 	tmp->Init("image/map.png", Vector2(CHIP_SIZE, CHIP_SIZE), Vector2(4, 4), Vector2(3, 3), 0);
 	LpGameTask.AddObj(tmp);		
+}
 
-	/// ひとまずコメントアウト
+void EditScene::Init(SCENE mode)
+{
+	LpMapCtl.MapReset();
+	offset = { 20,20 };
+	OBJ *tmp = new EditCursor(keyData, keyDataOld, GetOffset());				// ﾎﾟｲﾝﾀｰ変数にｵﾌﾞｼﾞｪｸﾄの情報を入れる
+	tmp->Init("image/map.png", Vector2(CHIP_SIZE, CHIP_SIZE), Vector2(4, 4), Vector2(3, 3), 0);
+	LpGameTask.AddObj(tmp);
 }
 
 void EditScene::DeleteObjList()
@@ -41,7 +48,7 @@ unique_scene EditScene::Update(unique_scene scene)
 	// ｹﾞｰﾑの初期化へ移動
 	if (keyData[KEY_INPUT_F5] && !keyDataOld[KEY_INPUT_F5])
 	{
-		LpGameTask.SetMode(SCENE::MAIN);
+		DeleteObjList();
 		return std::make_unique<GameScene>(keyData, keyDataOld);
 	}
 	// ｴﾃﾞｨｯﾄﾃﾞｰﾀの保存
@@ -126,6 +133,11 @@ unique_scene EditScene::Update(unique_scene scene)
 	}
 	ScreenFlip();
 	return std::move(scene);
+}
+
+SCENE EditScene::GetMode()
+{
+	return SCENE::EDIT;
 }
 
 Vector2 EditScene::GetOffset()
