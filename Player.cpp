@@ -31,29 +31,29 @@ void Player::SetMove(void)
 			LpGameTask.AddObj(tmp);
 		}
 		// ‰E•ûŒü‚ÌˆÚ“®(¶°¿Ù)
-		if (keyData[KEY_INPUT_NUMPAD4])
+		if (keyData[KEY_INPUT_LEFT])
 		{
-			moveID = KEY_INPUT_NUMPAD4;
+			moveID = KEY_INPUT_LEFT;
 			drawDir = DIR_LEFT;
 		}
 		// ¶•ûŒü‚ÌˆÚ“®(¶°¿Ù)
-		else if (keyData[KEY_INPUT_NUMPAD6])
+		else if (keyData[KEY_INPUT_RIGHT])
 		{
-			moveID = KEY_INPUT_NUMPAD6;
+			moveID = KEY_INPUT_RIGHT;
 			drawDir = DIR_RIGHT;
 		}
 		else
 		{
 			// ã•ûŒü‚ÌˆÚ“®(¶°¿Ù)
-			if (keyData[KEY_INPUT_NUMPAD8])
+			if (keyData[KEY_INPUT_UP])
 			{
-				moveID = KEY_INPUT_NUMPAD8;
+				moveID = KEY_INPUT_UP;
 				drawDir = DIR_UP;
 			}
 			// ‰º•ûŒü‚ÌˆÚ“®(¶°¿Ù)
-			else if (keyData[KEY_INPUT_NUMPAD2])
+			else if (keyData[KEY_INPUT_DOWN])
 			{
-				moveID = KEY_INPUT_NUMPAD2;
+				moveID = KEY_INPUT_DOWN;
 				drawDir = DIR_DOWN;
 			}
 			else
@@ -109,16 +109,16 @@ void Player::SetMove(void)
 	state = ST_WALK;
 	switch (moveID)
 	{
-	case KEY_INPUT_NUMPAD4:
+	case KEY_INPUT_LEFT:
 		pos.x -= speed;
 		break;
-	case KEY_INPUT_NUMPAD6:
+	case KEY_INPUT_RIGHT:
 		pos.x += speed;
 		break;
-	case KEY_INPUT_NUMPAD8:
+	case KEY_INPUT_UP:
 		pos.y -= speed;
 		break;
-	case KEY_INPUT_NUMPAD2:
+	case KEY_INPUT_DOWN:
 		pos.y += speed;
 		break;
 	default:
