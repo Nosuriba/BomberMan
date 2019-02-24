@@ -29,6 +29,7 @@ public:
 	const Vector2 GetMapSize();
 	bool AddObj(OBJ * obj);
 	std::list<OBJ*> GetObj();
+	void DeleteObjList();
 	
 	const char	 (&keyDataPub)[256];
 	const char	 (&keyDataOldPub)[256];

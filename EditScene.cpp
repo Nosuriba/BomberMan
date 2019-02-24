@@ -8,7 +8,6 @@
 EditScene::EditScene(const char(&_keyData)[256], const char(&_keyDataOld)[256]) : 
 	keyData(_keyData), keyDataOld(_keyDataOld)
 {
-	Init();
 }
 
 
@@ -16,31 +15,15 @@ EditScene::~EditScene()
 {
 }
 
-void EditScene::Init()
-{
-	LpMapCtl.MapReset();
-	offset = {20,20};
-	OBJ *tmp = new EditCursor(keyData, keyDataOld, GetOffset());				// Îß²İÀ°•Ï”‚ÉµÌŞ¼Şª¸Ä‚Ìî•ñ‚ğ“ü‚ê‚é
-	tmp->Init("image/map.png", Vector2(CHIP_SIZE, CHIP_SIZE), Vector2(4, 4), Vector2(3, 3), 0);
-	LpGameTask.AddObj(tmp);		
-}
-
 void EditScene::Init(SCENE mode)
 {
 	LpMapCtl.MapReset();
+	LpMapCtl.MapLoad();
 	offset = { 20,20 };
 	OBJ *tmp = new EditCursor(keyData, keyDataOld, GetOffset());				// Îß²İÀ°•Ï”‚ÉµÌŞ¼Şª¸Ä‚Ìî•ñ‚ğ“ü‚ê‚é
 	tmp->Init("image/map.png", Vector2(CHIP_SIZE, CHIP_SIZE), Vector2(4, 4), Vector2(3, 3), 0);
 	LpGameTask.AddObj(tmp);
-}
-
-void EditScene::DeleteObjList()
-{
-	for (auto itr : LpGameTask.GetObj())
-	{
-		delete itr;
-	}
-	LpGameTask.GetObj().clear();			// Ï¯ÌßÃŞ°À‚Ìî•ñ‚ğÁ‹‚·‚é
+	objList = LpGameTask.GetObj();
 }
 
 unique_scene EditScene::Update(unique_scene scene)
@@ -48,7 +31,7 @@ unique_scene EditScene::Update(unique_scene scene)
 	// ¹Ş°Ñ‚Ì‰Šú‰»‚ÖˆÚ“®
 	if (keyData[KEY_INPUT_F5] && !keyDataOld[KEY_INPUT_F5])
 	{
-		DeleteObjList();
+		LpGameTask.DeleteObjList();
 		return std::make_unique<GameScene>(keyData, keyDataOld);
 	}
 	// ´ÃŞ¨¯ÄÃŞ°À‚Ì•Û‘¶
@@ -100,7 +83,7 @@ unique_scene EditScene::Update(unique_scene scene)
 		}
 	}
 
-	for (auto itr : LpGameTask.GetObj())
+	for (auto itr : objList)
 	{
 		itr->Update();
 	}
@@ -108,7 +91,7 @@ unique_scene EditScene::Update(unique_scene scene)
 
 	ClsDrawScreen();
 
-	for (auto itr : LpGameTask.GetObj())
+	for (auto itr : objList)
 	{
 		itr->Draw();
 	}

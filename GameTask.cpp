@@ -33,18 +33,20 @@ void GameTask::Run()
 {
 	mode = SCENE::EDIT;
 	scenePtr = std::make_unique<EditScene>(keyData, keyDataOld);
+	scenePtr->Init(mode);
 	while (ProcessMessage() == 0 && CheckHitKey(KEY_INPUT_ESCAPE) == 0)
 	{
-		memcpy(keyDataOld, keyData, sizeof(keyDataOld));
-		GetHitKeyStateAll(keyData);
-		offset = scenePtr->GetOffset();
-		scenePtr = scenePtr->Update(std::move(scenePtr));
-
 		if (mode != scenePtr->GetMode())
 		{
 			mode = scenePtr->GetMode();
 			scenePtr->Init(mode);
 		}
+		memcpy(keyDataOld, keyData, sizeof(keyDataOld));
+		GetHitKeyStateAll(keyData);
+		offset = scenePtr->GetOffset();
+		scenePtr = scenePtr->Update(std::move(scenePtr));
+
+		
 	}
 }
 
@@ -81,6 +83,16 @@ bool GameTask::AddObj(OBJ * obj)
 std::list<OBJ*> GameTask::GetObj()
 {
 	return objList;
+}
+
+void GameTask::DeleteObjList()
+{
+	for (auto itr : objList)
+	{
+		delete itr;
+	}
+	objList.clear();
+
 }
 
 // ü‚Ì•`‰æ—pŠÖ”
