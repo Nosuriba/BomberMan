@@ -25,19 +25,22 @@ void GameScene::Init(SCENE mode)
 
 unique_scene GameScene::Update(unique_scene scene)
 {
+	objList = LpGameTask.GetObj();
 	// ｹﾞｰﾑの初期化へ移動
 	if (keyData[KEY_INPUT_F5] && !keyDataOld[KEY_INPUT_F5])
 	{
 		LpGameTask.DeleteObjList();
 		return std::make_unique<EditScene>(keyData, keyDataOld);
 	}
+
+	/// リストには爆弾が追加されていた
 	LpMapCtl.FireUpdate();
-	/// objListの管理が上手くいっていないので、そこの修正をおこなう
 	for (auto itr = objList.begin(); itr != objList.end();)
 	{
-		if (!(*itr)->CheckActive())
+		if (!(*itr)->CheckActive())		/// activeがtrueになっていない
 		{
 			delete (*itr);
+			LpGameTask.EraseObj(itr);
 			itr = objList.erase(itr);		// 返り値の一つ先を消す
 			continue;
 		}

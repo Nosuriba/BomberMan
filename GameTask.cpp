@@ -46,7 +46,7 @@ void GameTask::Run()
 		offset = scenePtr->GetOffset();
 		scenePtr = scenePtr->Update(std::move(scenePtr));
 
-		
+		/// ”š’e‚Ì•`‰æ‚Æíœ‚ªãè‚­‚¢‚Á‚Ä‚¢‚È‚¢‚Ì‚ÅA‚»‚Ì•”•ª‚ğ’¼‚µ‚Ä‚¨‚­
 	}
 }
 
@@ -83,6 +83,11 @@ bool GameTask::AddObj(OBJ * obj)
 std::list<OBJ*> GameTask::GetObj()
 {
 	return objList;
+}
+
+void GameTask::EraseObj(objList_itr itr)
+{
+	objList.erase(itr);
 }
 
 void GameTask::DeleteObjList()

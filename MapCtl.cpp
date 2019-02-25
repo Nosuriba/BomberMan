@@ -140,7 +140,7 @@ void MapCtl::SetPlayer(void)
 					LpGameTask.keyDataOldPub,
 					LpGameTask.GetOffset() + Vector2(0, -20));
 				tmp->Init("image/bomberman.png", Vector2(100 / 5, 128 / 4), Vector2(5, 4), Vector2(0, 0), 2);
-				tmp->setPos(Vector2(chipSize.x * x, chipSize.y * y));
+				tmp->SetPos(Vector2(chipSize.x * x, chipSize.y * y));
 				LpGameTask.AddObj(tmp);
 				break;
 			case MAP_EDIT_EM1:
@@ -149,7 +149,7 @@ void MapCtl::SetPlayer(void)
 					LpGameTask.keyDataOldPub,
 					LpGameTask.GetOffset() + Vector2(0, -20));
 				tmp->Init("image/enemy1.png", Vector2(100 / 5, 128 / 4), Vector2(5, 4), Vector2(0, 0), 2);
-				tmp->setPos(Vector2(chipSize.x * x, chipSize.y * y));
+				tmp->SetPos(Vector2(chipSize.x * x, chipSize.y * y));
 				LpMapCtl.SetMapData(MAP_EDIT_EM1, Vector2(chipSize.x * x, chipSize.y * y));
 				LpGameTask.AddObj(tmp);
 				break;
@@ -158,7 +158,7 @@ void MapCtl::SetPlayer(void)
 					LpGameTask.keyDataOldPub,
 					LpGameTask.GetOffset() + Vector2(0, -20));
 				tmp->Init("image/enemy2.png", Vector2(100 / 5, 128 / 4), Vector2(5, 4), Vector2(0, 0), 2);
-				tmp->setPos(Vector2(chipSize.x * x, chipSize.y * y));
+				tmp->SetPos(Vector2(chipSize.x * x, chipSize.y * y));
 				LpGameTask.AddObj(tmp);
 				break;
 			default:

@@ -26,9 +26,9 @@ public:
 	/* ｸﾗｽ外でも使うことができる */
 	OBJ(const char(&_keyData)[256],const char(&_keyDataOld)[256], Vector2 offSet);	
 	virtual ~OBJ();											
-	void  setPos(const Vector2& pos);				
+	void  SetPos(const Vector2& pos);				
 	const Vector2& getPos(void);					
-	void  setSize(const Vector2& divSize);			
+	void  SetSize(const Vector2& divSize);			
 	const Vector2& getSize(void);					
 	virtual void Draw(void);						
 	void Draw(const Vector2& pos);					
@@ -37,10 +37,8 @@ public:
 	void Init(std::string Filename, Vector2 divSize, Vector2 divCnt, Vector2 chipOffset, int speed, int animSpeed = 10, int stateAnimDiv = 2);
 	bool CheckActive(void);
 private:
-	/* ｸﾗｽ内でのみ使うことができる */
 	virtual void SetMove(void) = 0;
 protected:
-	/* 親ｸﾗｽと継承した子ｸﾗｽのみ使うことができる */
 	Vector2		pos;					
 	Vector2		divSize;				// 描画ﾁｯﾌﾟのｻｲｽﾞ
 	Vector2		divCnt;					// 描画ﾁｯﾌﾟのﾁｯﾌﾟ数

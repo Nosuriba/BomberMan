@@ -15,7 +15,7 @@ OBJ::~OBJ()
 }
 
 // 自分自身の座標に、入力された座標を代入する
-void OBJ::setPos(const Vector2 & pos)
+void OBJ::SetPos(const Vector2 & pos)
 {
 	this->pos = pos;
 }
@@ -26,7 +26,7 @@ const Vector2 & OBJ::getPos(void)
 	return this->pos;
 }
 // 自分自身のｻｲｽﾞに、入力されたｻｲｽﾞを代入する
-void OBJ::setSize(const Vector2 & divSize)
+void OBJ::SetSize(const Vector2 & divSize)
 {
 	this->divSize = divSize;
 }
@@ -56,9 +56,7 @@ void OBJ::Draw(const Vector2 & pos)
 	}
 	DrawGraph(pos.x, pos.y, LpImageMng.ImgGetID(imageName)[chipOffset.x + chipOffset.y * divCnt.x], true);
 }
-void OBJ::SetMove(void)
-{
-}
+
 void OBJ::Update(void)
 {
 	SetMove();
