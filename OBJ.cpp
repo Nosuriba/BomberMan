@@ -57,9 +57,14 @@ void OBJ::Draw(const Vector2 & pos)
 	DrawGraph(pos.x, pos.y, LpImageMng.ImgGetID(imageName)[chipOffset.x + chipOffset.y * divCnt.x], true);
 }
 
+void SetMove()
+{
+
+}
+
 void OBJ::Update(void)
 {
-	SetMove();
+	SetMove();			/// ”š•—‚ªo‚Ä‚¢‚é‚É—áŠO‚ªo‚Ä‚é
 }
 
 void OBJ::UpdateAnim(void)

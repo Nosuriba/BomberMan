@@ -45,8 +45,6 @@ void GameTask::Run()
 		GetHitKeyStateAll(keyData);
 		offset = scenePtr->GetOffset();
 		scenePtr = scenePtr->Update(std::move(scenePtr));
-
-		/// ”š’e‚Ì•`‰æ‚Æíœ‚ªãè‚­‚¢‚Á‚Ä‚¢‚È‚¢‚Ì‚ÅA‚»‚Ì•”•ª‚ğ’¼‚µ‚Ä‚¨‚­
 	}
 }
 
@@ -85,9 +83,9 @@ std::list<OBJ*> GameTask::GetObj()
 	return objList;
 }
 
-void GameTask::EraseObj(objList_itr itr)
+void GameTask::SetObj(std::list<OBJ*> objList)
 {
-	objList.erase(itr);
+	this->objList = objList;
 }
 
 void GameTask::DeleteObjList()
@@ -97,7 +95,6 @@ void GameTask::DeleteObjList()
 		delete itr;
 	}
 	objList.clear();
-
 }
 
 // ü‚Ì•`‰æ—pŠÖ”

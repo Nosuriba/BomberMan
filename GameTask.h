@@ -15,7 +15,6 @@ class OBJ;
 
 #define LpGameTask GameTask::GetInstance()	// GameTask‚ÌÛÝ¸ÞÎß²ÝÀ°
 
-using objList_itr = std::list<OBJ*>::iterator;
 class GameTask
 {
 public:
@@ -31,7 +30,7 @@ public:
 	const Vector2 GetMapSize();
 	bool AddObj(OBJ * obj);
 	std::list<OBJ*> GetObj();
-	void EraseObj(objList_itr itr);
+	void SetObj(std::list<OBJ*> objList);
 	void DeleteObjList();
 	
 	const char	 (&keyDataPub)[256];

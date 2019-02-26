@@ -33,25 +33,24 @@ unique_scene GameScene::Update(unique_scene scene)
 		return std::make_unique<EditScene>(keyData, keyDataOld);
 	}
 
-	/// リストには爆弾が追加されていた
 	LpMapCtl.FireUpdate();
 	for (auto itr = objList.begin(); itr != objList.end();)
 	{
-		if (!(*itr)->CheckActive())		/// activeがtrueになっていない
+		if (!(*itr)->CheckActive())
 		{
 			delete (*itr);
-			LpGameTask.EraseObj(itr);
-			itr = objList.erase(itr);		// 返り値の一つ先を消す
+			itr = objList.erase(itr);
+			LpGameTask.SetObj(objList);			/// objListの中身を削除した状態を更新している。
 			continue;
 		}
 		itr++;
 	}
 
 	// キャラクターの情報を更新している
-	for (auto itr = objList.begin(); itr != objList.end(); itr++)
+	for (auto itr : objList)
 	{
-		(*itr)->Update();
-		(*itr)->UpdateAnim();
+		(*itr).Update();
+		(*itr).UpdateAnim();
 	}
 	ClsDrawScreen();
 	LpMapCtl.MapDraw();
