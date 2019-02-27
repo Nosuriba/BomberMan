@@ -11,11 +11,6 @@ using namespace std;
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 {
 	LpGameTask.Run();
-	// ---------- ｹﾞｰﾑﾙｰﾌﾟ
-	//while (ProcessMessage() == 0 && CheckHitKey(KEY_INPUT_ESCAPE) == 0)
-	//{
-	//	LpGameTask.Update();		// ｹﾞｰﾑ全体の処理からｹﾞｰﾑの更新をする関数を間接参照する
-	//}
 	DxLib_End();	// DXﾗｲﾌﾞﾗﾘの終了処理
 	return 0;
 }

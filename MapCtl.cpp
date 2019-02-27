@@ -83,7 +83,6 @@ bool MapCtl::MapSave(void)
 	}
 	// ì¡íËÃß≤ŸÇ…√ﬁ∞¿Çï€ë∂Ç∑ÇÈ
 	FILE *fp;
-	// FileRead_open(BBM_ID_NAME, FALSE);
 	fopen_s(&fp, "Data/mapData.map", "wb");
 	fwrite(&expData, sizeof(DataHeader), 1, fp);
 	for (unsigned int y = 0; y < mapData.size(); y++)
@@ -137,8 +136,8 @@ void MapCtl::SetPlayer(void)
 			{
 			case MAP_EDIT_PL:
 				tmp = new Player(LpGameTask.keyDataPub,
-					LpGameTask.keyDataOldPub,
-					LpGameTask.GetOffset() + Vector2(0, -20));
+								 LpGameTask.keyDataOldPub,
+								 LpGameTask.GetOffset() + Vector2(0, -20));
 				tmp->Init("image/bomberman.png", Vector2(100 / 5, 128 / 4), Vector2(5, 4), Vector2(0, 0), 2);
 				tmp->SetPos(Vector2(chipSize.x * x, chipSize.y * y));
 				LpGameTask.AddObj(tmp);
@@ -146,8 +145,8 @@ void MapCtl::SetPlayer(void)
 			case MAP_EDIT_EM1:
 				// âºê›íË
 				tmp = new Enemy(LpGameTask.keyDataPub,
-					LpGameTask.keyDataOldPub,
-					LpGameTask.GetOffset() + Vector2(0, -20));
+								LpGameTask.keyDataOldPub,
+								LpGameTask.GetOffset() + Vector2(0, -20));
 				tmp->Init("image/enemy1.png", Vector2(100 / 5, 128 / 4), Vector2(5, 4), Vector2(0, 0), 2);
 				tmp->SetPos(Vector2(chipSize.x * x, chipSize.y * y));
 				LpMapCtl.SetMapData(MAP_EDIT_EM1, Vector2(chipSize.x * x, chipSize.y * y));
@@ -155,8 +154,8 @@ void MapCtl::SetPlayer(void)
 				break;
 			case MAP_EDIT_EM2:
 				tmp = new Enemy2(LpGameTask.keyDataPub,
-					LpGameTask.keyDataOldPub,
-					LpGameTask.GetOffset() + Vector2(0, -20));
+								 LpGameTask.keyDataOldPub,
+								 LpGameTask.GetOffset() + Vector2(0, -20));
 				tmp->Init("image/enemy2.png", Vector2(100 / 5, 128 / 4), Vector2(5, 4), Vector2(0, 0), 2);
 				tmp->SetPos(Vector2(chipSize.x * x, chipSize.y * y));
 				LpGameTask.AddObj(tmp);
@@ -231,14 +230,15 @@ void MapCtl::MapDraw(void)
 			&&  (fireMapData[y][x][MOVE_DIR_LEFT].flag || fireMapData[y][x][MOVE_DIR_RIGHT].flag))
 			{
 				DrawGraph(x * chipSize.x + LpGameTask.GetOffset().x,
-					y * chipSize.y + LpGameTask.GetOffset().y,
-					LpImageMng.ImgGetID("image/fire.png")[0], true);
+						  y * chipSize.y + LpGameTask.GetOffset().y,
+						  LpImageMng.ImgGetID("image/fire.png")[0], true);
 			}
 			else
 			{
 				// îöïóÇ™∏€ΩÇµÇ»Ç©Ç¡ÇΩèÍçá
 				for (unsigned int dir = 0; dir < MOVE_DIR_MAX; dir++)
 				{
+					/// Ç±Ç±ÇÃèàóùÇ…ì¸Ç¡ÇƒÇ¢Ç»Ç¢
 					if (fireMapData[y][x][dir].flag)
 					{
 						Vector2 firPos = Vector2(
@@ -259,7 +259,7 @@ bool MapCtl::SetMapData(MAP_ID id, Vector2 & vec)
 	Vector2 tmp(vec.x / chipSize.x, vec.y / chipSize.y);
 	// œØÃﬂIDÇÃîÕàÕéwíË
 	if ((tmp.y >= 0 && tmp.y < (int)mapData.size())
-		&& (tmp.x >= 0 && tmp.y < (int)mapData[tmp.y].size()))
+	&&  (tmp.x >= 0 && tmp.y < (int)mapData[tmp.y].size()))
 	{
 		mapData[tmp.y][tmp.x] = id;
 		return true;
@@ -270,9 +270,8 @@ bool MapCtl::SetMapData(MAP_ID id, Vector2 & vec)
 bool MapCtl::SetFireData(BOMB_DIR dir, Vector2 & vec)
 {
 	Vector2 tmp(vec.x / chipSize.x, vec.y / chipSize.y);
-
 	if ((tmp.y >= 0 && (unsigned int)tmp.y < fireMapData.size())
-		&& (tmp.x >= 0 && (unsigned int)tmp.x < fireMapData[tmp.y].size()))
+	&&  (tmp.x >= 0 && (unsigned int)tmp.x < fireMapData[tmp.y].size()))
 	{
 		fireMapData[tmp.y][tmp.x][dir].flag = true;
 		fireMapData[tmp.y][tmp.x][dir].count = 0;
@@ -308,7 +307,7 @@ MAP_ID MapCtl::GetMapData(Vector2 & vec)
 	Vector2 tmp(vec.x, vec.y);
 	// œØÃﬂIDÇÃîÕàÕéwíË
 	if ((tmp.y >= 0 && tmp.y < (int)mapData.size())
-		&& (tmp.x >= 0 && tmp.x < (int)mapData[tmp.y].size()))
+	&&  (tmp.x >= 0 && tmp.x < (int)mapData[tmp.y].size()))
 	{
 		return mapData[tmp.y + 1][tmp.x + 1];
 	}
@@ -340,7 +339,7 @@ MAP_ID MapCtl::GetMapData(Vector2 & vec, DRAW_DIR dir)
 
 	// œØÃﬂIDÇÃîÕàÕéwíË
 	if ((tmp.y >= 0 && tmp.y < (int)mapData.size())
-		&& (tmp.x >= 0 && tmp.x < (int)mapData[tmp.y].size()))
+	&&  (tmp.x >= 0 && tmp.x < (int)mapData[tmp.y].size()))
 	{
 		return mapData[tmp.y][tmp.x];
 	}

@@ -49,7 +49,8 @@ struct DataHeader {
 	unsigned char sum;		// sum’l
 };
 
-struct FireStr {
+struct FireStr
+ {
 	bool flag;
 	int count;
 };
